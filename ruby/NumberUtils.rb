@@ -68,6 +68,8 @@ class NumberUtils
         
         puts "741273: #{nu.primeFactors(741273)}"
         puts "741273: #{nu.primeFactorsWithCount(741273)}"
+        
+        puts "14147512341: #{nu.primeFactorsWithCount(14147512341)}"
     end
 
 end

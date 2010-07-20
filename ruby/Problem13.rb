@@ -115,6 +115,7 @@ class Problem13
     end
 
     if __FILE__ == $0
+        # run
         Problem13.new.run
     end
     
