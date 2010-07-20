@@ -39,6 +39,24 @@ class NumberUtils
         return primeFactors
     end
 
+    def primeFactorsWithCount(num)
+        primeFactors = Hash.new
+        
+        (2..Math.sqrt(num)).each do |i|
+            factorCount = 0
+            while (num % i == 0)
+                num = num / i
+                factorCount = factorCount + 1
+            end
+            
+            primeFactors.store(i, factorCount) unless factorCount == 0
+        end
+
+        primeFactors.store(num, 1) unless num < 2
+        
+        return primeFactors
+    end
+
     if __FILE__ == $0
         nu = NumberUtils.new
         
@@ -49,6 +67,7 @@ class NumberUtils
         puts "53: #{nu.isPrime(53)}"
         
         puts "741273: #{nu.primeFactors(741273)}"
+        puts "741273: #{nu.primeFactorsWithCount(741273)}"
     end
 
 end
