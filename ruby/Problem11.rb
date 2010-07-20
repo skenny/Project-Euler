@@ -27,31 +27,57 @@ class Problem11
 	def run()
 		gridSplit = @@grid.split
 		gridArray = Array.new(@@valsPerRow) { Array.new(@@valsPerRow) }
-		
-		rowLength = gridArray.length - 1
 
-		(0..rowLength).each do |x|
-			(0..rowLength).each do |y|
-				gridArray[x][y] = gridSplit[x + y].to_i
+		numRows = numCols = @@valsPerRow - 1
+
+		(0..numRows).each do |row|
+			(0..numCols).each do |col|
+				gridArray[row][col] = gridSplit[(row * @@valsPerRow) + col].to_i
 			end
 		end
 
 		maxProduct = 0
 
-		# check each row (top to bottom)
-		(0..rowLength).each do |rowNum|
-			row = gridArray[rowNum]
-			puts "rowNum #{rowNum}: #{row}"
-			(0..row.length - 3).each do |col|
-				puts "#    #{col}..#{col + 3}"
-
-				product = row[col] * row[col + 1] * row[col + 2] * row[col + 3]
+		# horizontal
+		(0..numRows).each do |row|
+			(0..numCols - 3).each do |col|
+				product = gridArray[row][col] * gridArray[row][col + 1] * gridArray[row][col + 2] * gridArray[row][col + 3]
 				if (product > maxProduct)
 					maxProduct = product
 				end
 			end
 		end
-		
+
+		# vertical
+		(0..numCols).each do |col|
+			(0..numRows - 3).each do |row|
+				product = gridArray[row][col] * gridArray[row + 1][col] * gridArray[row + 2][col] * gridArray[row + 3][col]
+				if (product > maxProduct)
+					maxProduct = product
+				end
+			end
+		end
+
+		# diagonal (\)
+		(0..numRows - 3).each do |row|
+			(0..numCols - 3).each do |col|
+				product = gridArray[row][col] * gridArray[row + 1][col + 1] * gridArray[row + 2][col + 2] * gridArray[row + 3][col + 3]
+				if (product > maxProduct)
+					maxProduct = product
+				end
+			end
+		end
+
+		# diagonal (/)
+		(3..numRows).each do |row|
+			(0..numCols - 3).each do |col|
+				product = gridArray[row][col] * gridArray[row - 1][col + 1] * gridArray[row - 2][col + 2] * gridArray[row - 3][col + 3]
+				if (product > maxProduct)
+					maxProduct = product
+				end
+			end
+		end
+
 		puts maxProduct
 	end
 
