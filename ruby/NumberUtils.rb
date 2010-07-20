@@ -5,18 +5,18 @@ require 'mathn'
 class NumberUtils
 
     def isPrime(num)
-        if num < 2
+        if (num < 2)
             return false
-        elsif num == 2
+        elsif (num == 2)
             return true
         end
             
-        if num % 2 == 0
+        if (num % 2 == 0)
             return false
         end
         
         (3..Math.sqrt(num)).step 2 do |i|
-            if num % i == 0
+            if (num % i == 0)
                 return false
             end
         end
@@ -26,12 +26,15 @@ class NumberUtils
 
     def primeFactors(num)
         primeFactors = Array.new
-        
-        (1..num).each do |i|
-            if isPrime(i) and num % i == 0
-                primeFactors << i
+                
+        (2..Math.sqrt(num)).each do |i|
+            if (num % i == 0)
+                primeFactors.push(i)
+                num = num / i while num % i == 0
             end
         end
+        
+        primeFactors.push(num) unless num < 2
         
         return primeFactors
     end
