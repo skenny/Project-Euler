@@ -5,10 +5,12 @@ require 'mathn'
 class NumberUtils
 
     def isPrime(num)
-        if num == 2
+        if num < 2
+            return false
+        elsif num == 2
             return true
         end
-        
+            
         if num % 2 == 0
             return false
         end
@@ -37,6 +39,8 @@ class NumberUtils
     if __FILE__ == $0
         nu = NumberUtils.new
         
+        puts "1: #{nu.isPrime(1)}"
+        puts "2: #{nu.isPrime(2)}"
         puts "7: #{nu.isPrime(7)}"
         puts "8: #{nu.isPrime(8)}"
         puts "53: #{nu.isPrime(53)}"
