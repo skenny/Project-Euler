@@ -1,5 +1,7 @@
 #!/usr/env/ruby
 
+require 'NumberUtils'
+
 class Problem12
 
     def run(minNumDivisors)
@@ -16,14 +18,14 @@ class Problem12
     end
 
     def countDivisors(num)
-        minNumDivisors = 0
-        (1..num).each do |i|
-            if num % i == 0
-                minNumDivisors += 1
-            end
+        numDivisors = 1
+        
+        primeFactors = NumberUtils.new.primeFactorsWithCount(num)
+        primeFactors.each do |factor, count|
+            numDivisors = numDivisors * (count + 1)
         end
-
-        return minNumDivisors
+        
+        return numDivisors
     end
 
     if __FILE__ == $0
