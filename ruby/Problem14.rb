@@ -2,16 +2,17 @@
 
 class Problem14
 
-    @@numChainHash = Hash.new
-    
+    @@cache = Hash.new
+
     def run()
         maxChain = 0
         maxChainStartingNum = 0
         (1...1000000).each do |i|
-            sequence = process(i, Array.new)
-            #puts "#{i}: #{sequence.length}"
-            if (sequence.length > maxChain)
-                maxChain = sequence.length
+            #sequence = getSequence(i, Array.new)
+            #len = sequence.length
+            len = getCount(i)
+            if (len > maxChain)
+                maxChain = len
                 maxChainStartingNum = i
             end
         end
@@ -19,7 +20,7 @@ class Problem14
         puts "#{maxChainStartingNum}: #{maxChain}"
     end
 
-    def process(num, sequence)
+    def getSequence(num, sequence)
         sequence.push(num)
         
         if (num == 1)
@@ -27,10 +28,29 @@ class Problem14
         end
         
         if (num % 2 == 0)
-            return process(num / 2, sequence)
+            return getSequence(num / 2, sequence)
         end
         
-        return process(3 * num + 1, sequence)
+        return getSequence(3 * num + 1, sequence)
+    end
+
+    def getCount(num)
+        count = @@cache[num]
+        if (!count.nil?)
+            return count
+        end
+        
+        count = 1
+        if (num > 1)
+            if (num % 2 == 0)
+                count = count + getCount(num / 2)
+            else
+                count = count + getCount(3 * num + 1)
+            end
+        end
+        
+        @@cache[num] = count
+        return count
     end
 
     if __FILE__ == $0
