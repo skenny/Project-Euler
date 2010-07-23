@@ -6,29 +6,38 @@ class Problem17
 
     def run()
         buildHash
-        #letters = (1..1000).each.inject(0) { |letters, n| letters + countLetters(n) }
+
+        #letters = (1..1000).each.inject(0) { |letters, n| letters + to_w(n).length }
         letters = 0
         (1..1000).each do |n|
-            count = countLetters(n)
-            puts "#{n}: #{count}"
+            phrase = to_w(n)
+            count = phrase.length
+            puts "#{n}: #{phrase} (#{count})"
             letters = letters + count
         end        
         puts letters
     end
 
-    def countLetters(n)
+    def to_w(n)
         phrase = ""
         if (n < 20 or (n < 100 and n % 10 == 0))
             phrase << $hash[n]
-        elsif (n < 1000 and n >= 100)
-            phrase << countLetters(n / 100) << "hundredand" < countLetters(n % 100)
-        elsif (n >= 20 and n % 10 != 0)
-            phrase << countLetters(n - n % 10) << countLetters(n % 10)
+        elsif (n >= 20 and n < 100)
+            phrase << to_w(n - n % 10) << to_w(n % 10)
         elsif (n == 1000)
             phrase << "onethousand"
+        elsif (n % 100 == 0)
+            if (n == 100)
+                phrase << to_w(1)
+            else
+                phrase << to_w(n / 100)
+            end
+            phrase << "hundred"
+        elsif (n > 100 and n < 1000)
+            phrase << to_w(n / 100) << "hundredand" << to_w(n % 100)
         end
 
-        return phrase.length;
+        return phrase;
     end
 
     def buildHash()
