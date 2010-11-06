@@ -57,6 +57,17 @@ class NumberUtils
         return primeFactors
     end
 
+    def properDivisors(num)
+        properDivisors = Array.new
+        (1..num / 2).each do |i|
+            if num % i == 0
+                properDivisors.push(i)
+            end
+        end
+        
+        properDivisors
+    end
+
     if __FILE__ == $0
         nu = NumberUtils.new
         
@@ -70,6 +81,9 @@ class NumberUtils
         puts "741273: #{nu.primeFactorsWithCount(741273)}"
         
         puts "14147512341: #{nu.primeFactorsWithCount(14147512341)}"
+        
+        puts "properDivisors(220): #{nu.properDivisors(220)}"
+        puts "properDivisors(284): #{nu.properDivisors(284)}"
     end
 
 end
