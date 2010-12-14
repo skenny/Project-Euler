@@ -30,16 +30,47 @@ class Problem22
     def run
         numUtils = NumberUtils.new
         
-        ints = (1..28123).to_a
+        puts "calculating abundants"
+        abundants = Array.new
         (1..28123).each do |n|
             if numUtils.abundant(n)
-                if ints.include?(n)
-                    #puts n
-                    ints.delete_if { |i| i % n == 0 }
-                end
+                puts n
+		abundants << n
             end
         end
-                
+        
+        puts "determining qualifying ints"
+        ints = Array.new
+        (1..28123).each do |n|
+            includeN = true
+
+            abundants.each do |a1|
+                if a1 < n
+                    abundants.each do |a2|
+                        sum = a1 + a2
+
+                        if sum > n
+                            break
+                        end
+
+                        if sum == n
+                            includeN = false
+                            break
+                        end
+                    end
+
+                    if !includeN
+                        break
+                    end
+                end
+            end
+
+            if includeN
+                puts n
+                ints << n
+            end
+        end
+
         puts ints.inject(0) { |sum, i| sum + i }
     end
 
