@@ -1,6 +1,6 @@
 #!/usr/env/ruby
 
-require 'NumberUtils'
+require "./NumberUtils.rb"
 
 class Problem12
 
