@@ -17,7 +17,6 @@
 =end
 
 require './NumberUtils.rb'
-require 'set'
 
 class Problem21
 

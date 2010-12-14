@@ -58,10 +58,11 @@ class NumberUtils
     end
 
     def properDivisors(num)
-        properDivisors = Array.new
-        (1..num / 2).each do |i|
+        properDivisors = [1]
+        (2..Math.sqrt(num)).each do |i|
             if num % i == 0
                 properDivisors.push(i)
+                properDivisors.push(num / i)
             end
         end
         
