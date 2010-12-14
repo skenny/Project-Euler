@@ -29,49 +29,33 @@ class Problem22
 
     def run
         numUtils = NumberUtils.new
-        
+
         puts "calculating abundants"
         abundants = Array.new
         (1..28123).each do |n|
             if numUtils.abundant(n)
-                puts n
+                #puts n
 		abundants << n
             end
         end
-        
-        puts "determining qualifying ints"
-        ints = Array.new
-        (1..28123).each do |n|
-            includeN = true
 
-            abundants.each do |a1|
-                if a1 < n
-                    abundants.each do |a2|
-                        sum = a1 + a2
-
-                        if sum > n
-                            break
-                        end
-
-                        if sum == n
-                            includeN = false
-                            break
-                        end
-                    end
-
-                    if !includeN
-                        break
-                    end
+        puts "calculating abundant sums"
+        abundantSums = Hash.new
+        (0..abundants.length - 1).each do |i|
+                (i..abundants.length - 1).each do |j|
+                        abundantSums[abundants.at(i) + abundants.at(j)] = true
                 end
-            end
-
-            if includeN
-                puts n
-                ints << n
-            end
         end
 
-        puts ints.inject(0) { |sum, i| sum + i }
+        puts "adding qualifying ints"
+        sum = 0
+        (1..28123).each do |n|
+                if !abundantSums[n]
+                        sum = sum + n
+                end
+        end
+
+        puts sum
     end
 
     Problem22.new.run
