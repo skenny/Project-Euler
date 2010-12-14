@@ -28,36 +28,21 @@ require "./NumberUtils.rb"
 class Problem22
 
     def run
-        abundants = Array.new
+        numUtils = NumberUtils.new
+        
+        ints = (1..28123).to_a
         (1..28123).each do |n|
-                if NumberUtils.new.abundant(n)
-                    puts n
-                    abundants << n
-                    
-                    (n * 2..28123).each do |aaa|
-                        if aaa % n == 0
-                            abundants << aaa
-                        end
-                    end
+            if numUtils.abundant(n)
+                if ints.include?(n)
+                    #puts n
+                    ints.delete_if { |i| i % n == 0 }
                 end
             end
         end
-        
-        sum = 0
-        (1..28123).each do |n|
-            if qualifies(n)
-                sum += n
-            end
-        end
-        
-        puts sum
+                
+        puts ints.inject(0) { |sum, i| sum + i }
     end
 
-    def qualifies(n)
-        return false
-    end
-
-    puts NumberUtils.new.abundant(12)
     Problem22.new.run
 
 end
