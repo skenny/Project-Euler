@@ -67,6 +67,10 @@ class NumberUtils
         
         properDivisors
     end
+    
+    def abundant(num)
+        properDivisors(num).inject(0) { |sum, divisor| sum + divisor } > num
+    end
 
     if __FILE__ == $0
         nu = NumberUtils.new
