@@ -68,9 +68,21 @@ class NumberUtils
         
         properDivisors
     end
-    
+
+    def properFactors(num)
+        properFactors = [1]
+        (2..Math.sqrt(num)).each do |i|
+            if num % i == 0
+                properFactors.push(i)
+                properFactors.push(num / i) unless i == (num / i)
+            end
+        end
+        
+        properFactors
+    end
+
     def abundant(num)
-        properDivisors(num).inject(0) { |sum, divisor| sum + divisor } > num
+        properFactors(num).inject(0) { |sum, divisor| sum + divisor } > num
     end
 
     if __FILE__ == $0
@@ -89,6 +101,14 @@ class NumberUtils
         
         puts "properDivisors(220): #{nu.properDivisors(220)}"
         puts "properDivisors(284): #{nu.properDivisors(284)}"
+        puts "properDivisors(12): #{nu.properDivisors(12)}"
+        puts "properDivisors(16): #{nu.properDivisors(16)}"
+                
+        puts "properFactors(12): #{nu.properFactors(12)}"
+        puts "properFactors(16): #{nu.properFactors(16)}"
+        
+        puts "abundant(12): #{nu.abundant(12)}"
+        puts "abundant(16): #{nu.abundant(16)}"
     end
 
 end
