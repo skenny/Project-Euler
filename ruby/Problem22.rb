@@ -21,7 +21,7 @@ class Problem22
     @@letters = "abcdefghijklmnopqrstuvwxyz";
 
     def run
-        nameStr = File.open("problem22-names.txt").gets
+        nameStr = File.open("../data/problem-22-names.txt").gets
         
         names = Array.new
         nameStr.split(",").each do |name|
