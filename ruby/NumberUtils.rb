@@ -85,6 +85,10 @@ class NumberUtils
         properFactors(num).inject(0) { |sum, divisor| sum + divisor } > num
     end
 
+    def fibonacci(num)
+        num < 2 ? num : fibonacci(num - 1) + fibonacci(num - 2)
+    end
+
     if __FILE__ == $0
         nu = NumberUtils.new
         
@@ -109,6 +113,10 @@ class NumberUtils
         
         puts "abundant(12): #{nu.abundant(12)}"
         puts "abundant(16): #{nu.abundant(16)}"
+        
+        (1..12).each do |i|
+            puts "f#{i} = #{nu.fibonacci(i)}"
+        end
     end
 
 end
