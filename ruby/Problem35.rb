@@ -18,11 +18,13 @@ require "./NumberUtils"
 class Problem35
 
     $nUtil = NumberUtils.new
+    $primeCache = Hash.new
+    $circularCache = Hash.new
     
     def run(n)
         count = 0
         (2...n).each do |i|
-            if (circular?(i))
+            if (circular?(i.to_s))
                 puts "#{i}"
                 count += 1
             end
@@ -30,25 +32,27 @@ class Problem35
         
         puts count
     end
-    
-    def circular?(num)
-        if (!$nUtil.isPrime(num))
-            return false
+
+    def circular?(n)
+        if (!$circularCache.key?(n))
+            rotation = n
+            circular = true
+            while (true)
+                if (!prime?(rotation.to_i))
+                    circular = false
+                    break
+                end
+
+                rotation = rotate(rotation)
+                if (rotation.eql?(n))
+                    break
+                end
+            end
+            
+            $circularCache[n] = circular
         end
         
-        circular = true
-        nRot = num.to_s
-        while (true)
-            nRot = rotate(nRot)
-            if (nRot == num.to_s)
-                break
-            end
-            if (!$nUtil.isPrime(nRot.to_i))
-                circular = false
-            end
-        end
-        
-        circular
+        $circularCache[n]
     end
 
     def rotate(str)
@@ -58,6 +62,14 @@ class Problem35
         
         numStr = str.to_s
         numStr[1, numStr.length - 1] << numStr[0]
+    end
+
+    def prime?(n)
+        if (!$primeCache.key?(n))
+            $primeCache[n] = $nUtil.isPrime(n)
+        end
+        
+        $primeCache[n]
     end
 
     Problem35.new.run(1000000)
