@@ -81,6 +81,18 @@ class NumberUtils
         properFactors
     end
 
+    def positiveDivisors(num)
+        positiveDivisors = [1]
+        (2..num).each do |i|
+            if num % i == 0
+                #puts "num #{num} i #{i}"
+                positiveDivisors.push(i)
+            end
+        end
+        
+        positiveDivisors
+    end
+
     def abundant(num)
         properFactors(num).inject(0) { |sum, divisor| sum + divisor } > num
     end
